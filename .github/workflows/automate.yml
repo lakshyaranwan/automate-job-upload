@@ -1,0 +1,29 @@
+name: Job pipeline
+
+on:
+  schedule:
+    - cron: "0 6 * * *"   # daily at 06:00 UTC — edit as needed
+  workflow_dispatch:
+
+jobs:
+  pipeline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm install
+      - name: Run pipeline
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+          JOBS_TABLE: ${{ secrets.JOBS_TABLE }}
+          AUTO_PUBLISH: ${{ vars.AUTO_PUBLISH }}
+          POST_TO_LINKEDIN: ${{ vars.POST_TO_LINKEDIN }}
+          LINKEDIN_ACCESS_TOKEN: ${{ secrets.LINKEDIN_ACCESS_TOKEN }}
+          LINKEDIN_ORG_URN: ${{ secrets.LINKEDIN_ORG_URN }}
+          LINKEDIN_VERSION: ${{ vars.LINKEDIN_VERSION }}
+        run: node pipeline.js
