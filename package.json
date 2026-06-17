@@ -1,0 +1,9 @@
+{
+  "name": "design-tokri-job-pipeline",
+  "version": "1.0.0",
+  "description": "Find latest design jobs, save them to the Design Tokri (Lovable/Supabase) backend, and post to LinkedIn — fully automated.",
+  "type": "module",
+  "scripts": {
+    "start": "node pipeline.js"
+  }
+}
